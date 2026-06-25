@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANK — Beyond Imagination</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #03070e;
+  --bg2: #060f1d;
+  --bg3: #091828;
+  --cyan: #00d4ff;
+  --cyan2: #00a8cc;
+  --royal: #1565c0;
+  --royal2: #1e88e5;
+  --glow: rgba(0,212,255,0.15);
+  --text: #e8f4ff;
+  --muted: #5a8faa;
+  --dim: #1a3a52;
+  --border: #0c2d4a;
+  --border2: #1565c0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--royal); border-radius: 2px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(3,7,14,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid var(--border);
+  transition: background 0.3s;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.25em;
+  color: var(--cyan);
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-logo span { color: #fff; opacity: 0.3; font-size: 0.6rem; letter-spacing: 0.1em; display: block; font-family: 'Inter', sans-serif; font-weight: 300; margin-top: -4px; }
+.nav-links {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0 1.1rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  border-bottom: 1.5px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-links a:hover { color: var(--cyan); border-bottom-color: var(--cyan); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,212,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(21,101,192,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,212,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 70%);
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 12vw, 10rem);
+  letter-spacing: 0.08em;
+  color: #fff;
+  line-height: 0.9;
+  position: relative;
+  margin-bottom: 0.3rem;
+}
+.hero-title .cyan { color: var(--cyan); }
+.hero-sub-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1rem, 3vw, 1.6rem);
+  font-weight: 300;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.hero-desc {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.8;
+  margin: 0 auto 3rem;
+  position: relative;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cyan);
+  color: #03070e;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border-radius: 4px;
+  text-decoration: none;
+  position: relative;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.hero-cta:hover { opacity: 0.9; transform: translateY(-2px); }
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.hero-scroll span { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); }
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--cyan), transparent); animation: scrolldown 1.6s infinite; }
+@keyframes scrolldown { 0%{opacity:0;transform:scaleY(0);transform-origin:top;} 40%{opacity:1;} 100%{opacity:0;transform:scaleY(1);transform-origin:top;} }
+
+/* ── SECTION COMMON ── */
+section { scroll-margin-top: 64px; }
+.section-wrap { max-width: 1280px; margin: 0 auto; padding: 6rem 2rem; }
+.section-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  letter-spacing: 0.06em;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.section-desc { font-size: 14px; color: var(--muted); max-width: 480px; line-height: 1.8; margin-bottom: 3rem; }
+
+/* ── STAT BAR ── */
+.stat-bar {
+  display: flex;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 5rem;
+  background: var(--bg2);
+}
+.stat-item {
+  flex: 1;
+  padding: 1.8rem 1.5rem;
+  border-right: 0.5px solid var(--border);
+  text-align: center;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.05em;
+  color: var(--cyan);
+  display: block;
+  line-height: 1;
+}
+.stat-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
+
+/* ── PRODUCTS GRID ── */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.product-card {
+  background: var(--bg2);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s;
+  cursor: default;
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.product-card:hover { background: var(--bg3); }
+.product-card:hover::before { opacity: 1; }
+.product-glow {
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(0,212,255,0.08), transparent 70%);
+  pointer-events: none;
+}
+.product-tag {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan2);
+  background: rgba(0,212,255,0.06);
+  border: 0.5px solid rgba(0,212,255,0.15);
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.product-icon { font-size: 2.2rem; margin-bottom: 0.8rem; display: block; }
+.product-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.product-tagline { font-size: 12px; color: var(--cyan2); margin-bottom: 1rem; font-style: italic; }
+.product-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+.product-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.spec-pill {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(21,101,192,0.12);
+  border: 0.5px solid rgba(21,101,192,0.3);
+  color: var(--royal2);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* ── FEATURED (WIDE CARD) ── */
+.product-card.wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  padding: 3rem;
+}
+@media (max-width: 700px) {
+  .product-card.wide { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+.wide-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--cyan);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.wide-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  letter-spacing: 0.06em;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.wide-title span { color: var(--cyan); }
+.wide-desc { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+.wide-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.wide-stat {
+  background: rgba(0,212,255,0.04);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+.wide-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cyan);
+  display: block;
+}
+.wide-stat-key { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+/* ── DIVIDER LINE ── */
+.hdiv {
+  width: 100%;
+  height: 0.5px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+  margin: 0;
+}
+
+/* ── CREATORS ── */
+.creators-section { background: var(--bg2); }
+.creators-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+@media (max-width: 700px) { .creators-grid { grid-template-columns: 1fr; } }
+.creator-card {
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  background: var(--bg3);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.creator-card:hover { border-color: var(--border2); }
+.creator-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--royal), var(--cyan));
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 30px rgba(0,212,255,0.2);
+}
+.creator-role {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+.creator-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.creator-desc { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.footer-tagline {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 2rem;
+}
+.footer-creators {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.footer-creators span { color: var(--cyan2); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; }
+  .products-grid { grid-template-columns: 1fr; }
+  .stat-bar { flex-wrap: wrap; }
+  .stat-item { min-width: 50%; border-right: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">ANK<span>Beyond Imagination</span></a>
+  <ul class="nav-links">
+    <li><a href="#air">Air</a></li>
+    <li><a href="#space">Space</a></li>
+    <li><a href="#sea">Sea</a></li>
+    <li><a href="#land">Land</a></li>
+    <li><a href="#tech">Tech</a></li>
+    <li><a href="#creators">Creators</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">ANK Corporation — Product Universe</p>
+  <h1 class="hero-title"><span class="cyan">Beyond</span><br>Imagination</h1>
+  <p class="hero-sub-title">Beyond Limits</p>
+  <p class="hero-desc">From the ocean floor to the edge of space — ANK builds the most extraordinary vehicles, vessels, and technology ever conceived by human hands.</p>
+  <a class="hero-cta" href="#air">Explore the Fleet ↓</a>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+<!-- STATS -->
+<div style="background:var(--bg2); padding: 0 2rem;">
+  <div style="max-width:1280px; margin:0 auto; padding: 3rem 0;">
+    <div class="stat-bar">
+      <div class="stat-item"><span class="stat-num">11</span><span class="stat-label">Products</span></div>
+      <div class="stat-item"><span class="stat-num">Mach 28+</span><span class="stat-label">Top Speed (Space)</span></div>
+      <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Range</span></div>
+      <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Creators</span></div>
+      <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Human-Built</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hdiv"></div>
+
+<!-- ── AIR ── -->
+<section id="air">
+  <div class="section-wrap">
+    <p class="section-eyebrow">Category 01 — Air</p>
+    <h2 class="section-title">Master the Sky</h2>
+    <p class="section-desc">Aircraft that redefine what flight means — from ultra-luxury private jets to the world's largest airship and the most advanced helicopter ever built.</p>
+
+    <div class="products-grid">
+
+      <!-- WIDE: SUPERNOVA -->
+      <div class="product-card wide">
+        <div>
+          <div class="wide-badge">✦ Flagship Aircraft</div>
+          <div class="wide-title">ANK <span>Supernova</span></div>
+          <p style="font-size:12px;color:var(--cyan2);margin-bottom:1rem;font-style:italic;">The World's Most Advanced Luxury Aircraft</p>
+          <p class="wide-desc">The Supernova is a space-transition-capable commercial jet engineered for those who demand the absolute pinnacle of comfort — from holographic entertainment and AI-stabilized flight to soundless engines and a parachute crash-safety system. Beyond first class in every sense.</p>
+          <div class="product-specs">
+            <span class="spec-pill">Mach 2.8+</span>
+            <span class="spec-pill">80 Passengers</span>
+            <span class="spec-pill">19,000+ km Range</span>
+            <span class="spec-pill">Space Transition</span>
+            <span class="spec-pill">4× ANK Hyperdrive</span>
+            <span class="spec-pill">Holographic Interior</span>
+          </div>
+        </div>
+        <div class="wide-stats">
+          <div class="wide-stat"><span class="wide-stat-val">Mach 2.8+</span><span class="wide-stat-key">Top Speed</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">19,000 km</span><span class="wide-stat-key">Range</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">4 Classes</span><span class="wide-stat-key">Cabin Zones</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">H₂ Fuel</span><span class="wide-stat-key">Sustainable Power</span></div>
+        </div>
+      </div>
+
+      <!-- SUPREME ONE -->
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Private Jet</span>
+        <span class="product-icon">✈️</span>
+        <div class="product-name">ANK Supreme One</div>
+        <div class="product-tagline">The World's Most Luxurious Private Jet</div>
+        <p class="product-desc">Built exclusively for 3 people on Earth. A 138-metre flying palace with a cinema, spa, grand lounge, chef's kitchen, and NEXA AI co-pilot. 100% carbon neutral.</p>
+        <div class="product-specs">
+          <span class="spec-pill">Mach 0.85</span><span class="spec-pill">18,000 km</span><span class="spec-pill">30 Passengers</span><span class="spec-pill">NEXA AI</span>
+        </div>
+      </div>
+
+      <!-- SKY TITAN -->
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Helicopter</span>
+        <span class="product-icon">🚁</span>
+        <div class="product-name">ANK Sky Titan 3000</div>
+        <div class="product-tagline">The World's Largest & Most Luxurious Helicopter</div>
+        <p class="product-desc">A 50-metre flying palace on three luxury levels — master suite, fine dining, spa, gym, conference room, and rooftop lounge. Lands on mountains, water, or snow.</p>
+        <div class="product-specs">
+          <span class="spec-pill">370 km/h</span><span class="spec-pill">12,000 km</span><span class="spec-pill">30 Passengers</span><span class="spec-pill">All-Terrain Landing</span>
+        </div>
+      </div>
+
+      <!-- AETHER TITAN -->
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Airship</span>
+        <span class="product-icon">🛸</span>
+        <div class="product-name">ANK Aether Titan</div>
+        <div class="product-tagline">The World's Largest Luxury Airship</div>
+        <p class="product-desc">A floating city — 1,200 ft long, 15 floors, 150+ levels of amenities from indoor oceans to sky infinity pools. Stays airborne for 700 days. Adaptive size technology included.</p>
+        <div class="product-specs">
+          <span class="spec-pill">1,200 ft Long</span><span class="spec-pill">700 Days Airborne</span><span class="spec-pill">Zero Turbulence</span><span class="spec-pill">Adaptive Size</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+<!-- ── SPACE ── -->
+<section id="space">
+  <div class="section-wrap">
+    <p class="section-eyebrow">Category 02 — Space</p>
+    <h2 class="section-title">Own the Universe</h2>
+    <p class="section-desc">From interstellar public spaceship to a private spaceplane built for three — ANK's space fleet makes the cosmos accessible, liveable, and luxurious.</p>
+
+    <div class="products-grid">
+
+      <div class="product-card wide">
+        <div>
+          <div class="wide-badge">✦ Flagship Spacecraft</div>
+          <div class="wide-title">ANK <span>Celestial Voyager</span></div>
+          <p style="font-size:12px;color:var(--cyan2);margin-bottom:1rem;font-style:italic;">The World's First True Interstellar Public Spaceship</p>
+          <p class="wide-desc">Not a ship — a world. 1,200 metres long. 10,000+ passengers. 30+ luxury levels including parks, casinos, hospitals, schools, hydroponic farms, and a rotating sky restaurant. Powered by ANK Quantum Drive. Can travel to any planet, moon, or nebula.</p>
+          <div class="product-specs">
+            <span class="spec-pill">1,200 m Long</span><span class="spec-pill">10,000+ Passengers</span><span class="spec-pill">Mach 0.99c</span><span class="spec-pill">Unlimited Range</span><span class="spec-pill">Adaptive Size</span><span class="spec-pill">700-Day Endurance</span>
+          </div>
+        </div>
+        <div class="wide-stats">
+          <div class="wide-stat"><span class="wide-stat-val">0.99c</span><span class="wide-stat-key">Max Velocity</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">30+</span><span class="wide-stat-key">Luxury Levels</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">∞</span><span class="wide-stat-key">Range</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">30 sec</span><span class="wide-stat-key">Deploy Time</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Spaceplane</span>
+        <span class="product-icon">🛩️</span>
+        <div class="product-name">ANK Celestial Emperor</div>
+        <div class="product-tagline">The World's Most Luxurious Spaceplane</div>
+        <p class="product-desc">560 metres long. Exclusive to 3 ANK members. Features an infinity pool, 360° observation deck, owner suites, 16K cinema, and comes with a luxury rover, space pod, and shuttle craft.</p>
+        <div class="product-specs">
+          <span class="spec-pill">Mach 28+ (Space)</span><span class="spec-pill">560 m Long</span><span class="spec-pill">8 Decks</span><span class="spec-pill">Lunar Landing</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Hovercraft</span>
+        <span class="product-icon">🛸</span>
+        <div class="product-name">ANK Aeris</div>
+        <div class="product-tagline">The Private Hovercraft of ANK</div>
+        <p class="product-desc">128 metres of pure magnetic levitation. Zero crew, fully autonomous NEXA AI. Exclusive to 3 members only. Auto privacy shield, biometric access, and quantum encryption throughout.</p>
+        <div class="product-specs">
+          <span class="spec-pill">300 mph</span><span class="spec-pill">5,000 mi Range</span><span class="spec-pill">Mag-Lev Drive</span><span class="spec-pill">0 Crew</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+<!-- ── SEA ── -->
+<section id="sea">
+  <div class="section-wrap">
+    <p class="section-eyebrow">Category 03 — Sea</p>
+    <h2 class="section-title">Conquer the Deep</h2>
+    <p class="section-desc">ANK's maritime fleet ranges from the world's most luxurious submarine to a vessel that travels on the surface, underwater, and through the sky.</p>
+
+    <div class="products-grid">
+
+      <div class="product-card wide">
+        <div>
+          <div class="wide-badge">✦ Flagship Submarine</div>
+          <div class="wide-title">ANK <span>Oceanic Majesty</span></div>
+          <p style="font-size:12px;color:var(--cyan2);margin-bottom:1rem;font-style:italic;">The World's Most Luxurious Submarine</p>
+          <p class="wide-desc">164 metres of silent luxury across 7 levels — owner's master suite, cinema, casino, spa, chef's kitchen, wine cellar, two private submersible garages, and a stargazer dome. Dives to 1,000 m. 100% autonomous. Near-silent operation.</p>
+          <div class="product-specs">
+            <span class="spec-pill">164 m Long</span><span class="spec-pill">40 Passengers</span><span class="spec-pill">1,000 m Depth</span><span class="spec-pill">32 Knots</span><span class="spec-pill">Unlimited Range</span><span class="spec-pill">100% Autonomous</span>
+          </div>
+        </div>
+        <div class="wide-stats">
+          <div class="wide-stat"><span class="wide-stat-val">1,000 m</span><span class="wide-stat-key">Max Depth</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">32 kts</span><span class="wide-stat-key">Cruise Speed</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">7</span><span class="wide-stat-key">Luxury Levels</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">∞</span><span class="wide-stat-key">Endurance</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Tri-Domain Cruiser</span>
+        <span class="product-icon">🚢</span>
+        <div class="product-name">ANK Tri-Domain Cruiser</div>
+        <div class="product-tagline">One Ship. Every Realm.</div>
+        <p class="product-desc">The world's first vessel that cruises the ocean, dives below it, and soars above it. 520 metres. 3,000 passengers. Mach 1.2 in the air. Features Casino Royale, infinity pools, and a private helipad.</p>
+        <div class="product-specs">
+          <span class="spec-pill">520 m Long</span><span class="spec-pill">Mach 1.2 (Air)</span><span class="spec-pill">3,000 Passengers</span><span class="spec-pill">Tri-Domain Drive</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+<!-- ── LAND ── -->
+<section id="land">
+  <div class="section-wrap">
+    <p class="section-eyebrow">Category 04 — Land</p>
+    <h2 class="section-title">Rule the Road</h2>
+    <p class="section-desc">Whether it's a 2,500 hp hypercar, a luxury mega truck that doubles as a 5-star hotel, or an adaptive bus that shrinks in traffic — ANK's land vehicles are built for legends.</p>
+
+    <div class="products-grid">
+
+      <div class="product-card wide">
+        <div>
+          <div class="wide-badge">✦ Flagship Supercar</div>
+          <div class="wide-title">ANK <span>Aerospike</span></div>
+          <p style="font-size:12px;color:var(--cyan2);margin-bottom:1rem;font-style:italic;">The Ultimate Expression of Luxury & Performance</p>
+          <p class="wide-desc">2,500 hp. 0–60 in 1.8 seconds. 320 mph. 1,000 mile range. Built on a carbon-titanium monocoque, the Aerospike features holographic dashboard, 360° AR windshield, starlight fiber optic roof, 22-speaker audio, and NEXA AI Level 5 autonomous driving. Available in 5 colours. Ownership includes a 24/7 personal concierge and red carpet delivery.</p>
+          <div class="product-specs">
+            <span class="spec-pill">2,500 HP</span><span class="spec-pill">0–60 in 1.8s</span><span class="spec-pill">320 mph</span><span class="spec-pill">1,000 mi Range</span><span class="spec-pill">Level 5 Autonomy</span><span class="spec-pill">Carbon-Titanium</span>
+          </div>
+        </div>
+        <div class="wide-stats">
+          <div class="wide-stat"><span class="wide-stat-val">2,500 HP</span><span class="wide-stat-key">Power Output</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">1.8s</span><span class="wide-stat-key">0–60 mph</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">320 mph</span><span class="wide-stat-key">Top Speed</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">8 min</span><span class="wide-stat-key">10–80% Charge</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Mega Truck</span>
+        <span class="product-icon">🚛</span>
+        <div class="product-name">ANK Titan Commander</div>
+        <div class="product-tagline">The World's Most Advanced Luxury Mega Truck</div>
+        <p class="product-desc">36 metres. 6 luxury floors. 5-star hotel, command center, and survival platform in one. Rooftop helipad, spa, fine dining, onboard garage. Crosses deserts, mountains, snow, and water.</p>
+        <div class="product-specs">
+          <span class="spec-pill">36 m Long</span><span class="spec-pill">6 Floors</span><span class="spec-pill">7,000 km Range</span><span class="spec-pill">All-Terrain</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-glow"></div>
+        <span class="product-tag">Adaptive Bus</span>
+        <span class="product-icon">🚌</span>
+        <div class="product-name">ANK Adaptive Luxury Bus</div>
+        <div class="product-tagline">The World's First Adaptive Luxury Bus</div>
+        <p class="product-desc">Auto-shrinks in city traffic and expands on open roads. Magnetic levitation. Floats on water. 6 luxury levels with presidential suite, spa, and fine dining. 220 km/h. Zero emissions.</p>
+        <div class="product-specs">
+          <span class="spec-pill">Adaptive Size</span><span class="spec-pill">Mag-Lev</span><span class="spec-pill">220 km/h</span><span class="spec-pill">Zero Emission</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+<!-- ── TECH ── -->
+<section id="tech">
+  <div class="section-wrap">
+    <p class="section-eyebrow">Category 05 — Technology</p>
+    <h2 class="section-title">Wear the Future</h2>
+    <p class="section-desc">The ANK Genesis Band is the most powerful wearable ever created — summon any vehicle on Earth, in the water, in the air, or in space from your wrist.</p>
+
+    <div class="products-grid">
+      <div class="product-card wide">
+        <div>
+          <div class="wide-badge">✦ Wearable Tech</div>
+          <div class="wide-title">ANK <span>Genesis Band</span></div>
+          <p style="font-size:12px;color:var(--cyan2);margin-bottom:1rem;font-style:italic;">Imagine It. Summon It.</p>
+          <p class="wide-desc">Type or say any vehicle — a Bugatti Chiron, a submarine, a SpaceX Falcon 9 — and the NEXA AI dispatches it to your exact location, autonomously. Holographic 3D display. Five-layer biometric security: fingerprint, voice, heartbeat, face, and quantum encryption. Emergency mode auto-selects the best vehicle for any situation — land, water, air, or space.</p>
+          <div class="product-specs">
+            <span class="spec-pill">Any Vehicle on Earth</span><span class="spec-pill">Holographic Display</span><span class="spec-pill">NEXA AI</span>
+            <span class="spec-pill">Quantum Encryption</span><span class="spec-pill">Emergency Mode</span><span class="spec-pill">Zero Delay Summoning</span>
+          </div>
+        </div>
+        <div class="wide-stats">
+          <div class="wide-stat"><span class="wide-stat-val">∞</span><span class="wide-stat-key">Vehicle Library</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">5-Layer</span><span class="wide-stat-key">Biometric Security</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">Global</span><span class="wide-stat-key">Connectivity</span></div>
+          <div class="wide-stat"><span class="wide-stat-val">Instant</span><span class="wide-stat-key">Summon Speed</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+<!-- ── CREATORS ── -->
+<section id="creators" class="creators-section">
+  <div class="section-wrap">
+    <p class="section-eyebrow">The Minds Behind ANK</p>
+    <h2 class="section-title">Our Creators</h2>
+    <p class="section-desc">ANK was conceived, designed, and built by three visionaries who refused to accept the limits of what was possible.</p>
+
+    <div class="creators-grid">
+
+      <div class="creator-card">
+        <div class="creator-avatar">AD</div>
+        <div class="creator-role">Co-Founder & Creator</div>
+        <div class="creator-name">Adhvik Dinesh</div>
+        <p class="creator-desc">Visionary architect of the ANK universe — the mind that first imagined a company with no ceiling, no limits, and no compromises. If it exists in ANK, Adhvik dreamt it first.</p>
+      </div>
+
+      <div class="creator-card">
+        <div class="creator-avatar">KP</div>
+        <div class="creator-role">Co-Founder & Creator</div>
+        <div class="creator-name">Kaustav Pal</div>
+        <p class="creator-desc">The strategic force behind ANK's engineering ambition — bridging the gap between imagination and execution. Kaustav turns the impossible into a blueprint.</p>
+      </div>
+
+      <div class="creator-card">
+        <div class="creator-avatar">NS</div>
+        <div class="creator-role">Co-Founder & Creator</div>
+        <div class="creator-name">Nilesh Sathiamurty</div>
+        <p class="creator-desc">The design and innovation mind of ANK — obsessed with detail, driven by perfection. Nilesh ensures that everything ANK makes doesn't just work — it stuns.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">ANK</span>
+  <p class="footer-tagline">Beyond Imagination. Beyond Limits.</p>
+  <p class="footer-creators">Created by <span>Adhvik Dinesh</span> &nbsp;·&nbsp; <span>Kaustav Pal</span> &nbsp;·&nbsp; <span>Nilesh Sathiamurty</span></p>
+</footer>
+
+<script>
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (s.getBoundingClientRect().top <= 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--cyan)' : '';
+      a.style.borderBottomColor = a.getAttribute('href') === '#' + current ? 'var(--cyan)' : 'transparent';
+    });
+  }, { passive: true });
+
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 64, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
